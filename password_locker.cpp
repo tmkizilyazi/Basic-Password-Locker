@@ -12,7 +12,7 @@
 #endif
 
 const std::string FILE_NAME = "passwords.dat"; // Dosya adı
-const std::string ADMIN_PASSWORD = "miracveberat2021"; // Yetkili giriş şifresi
+const std::string ADMIN_PASSWORD = "YOUR_PASS"; // Yetkili giriş şifresi
 
 std::map<std::string, std::string> passwordDatabase; // Şifreler (Kategori -> Şifre)
 
