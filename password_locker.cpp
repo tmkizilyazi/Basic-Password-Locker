@@ -6,28 +6,28 @@
 
 #ifdef _WIN32
 #include <conio.h>
-#include <windows.h> 
+#include <windows.h> // Dosyayı gizlemek için
 #else
-#include <unistd.h> 
+#include <unistd.h> // getpass için
 #endif
 
-const std::string FILE_NAME = "passwords.dat";  
-const std::string ADMIN_PASSWORD = "Your_Pass"; // Yetkili giriş şifresi
+const std::string FILE_NAME = "passwords.dat"; // Dosya adı
+const std::string ADMIN_PASSWORD = "miracveberat2021"; // Yetkili giriş şifresi
 
 std::map<std::string, std::string> passwordDatabase; // Şifreler (Kategori -> Şifre)
 
-
+// 📌 Basit XOR Şifreleme Fonksiyonu
 std::string encryptDecrypt(const std::string &data, char key = 'K')
 {
     std::string output = data;
     for (size_t i = 0; i < data.size(); i++)
     {
-        output[i] ^= key
+        output[i] ^= key; // XOR işlemi
     }
     return output;
 }
 
-
+// 📌 Şifreleri Dosyadan Yükleme
 void loadPasswords()
 {
     std::ifstream file(FILE_NAME);
@@ -56,23 +56,24 @@ void savePasswords()
     file.close();
 }
 
-
+// 📌 Dosyanın Var Olup Olmadığını Kontrol Et
 bool fileExists(const std::string &filename)
 {
     std::ifstream file(filename);
     return file.good();
 }
 
-
+// 📌 Dosyanın Silinmesini Önleme
 void protectFile()
 {
 #ifdef _WIN32
-    system(("attrib +h " + FILE_NAME).c_str());
+    system(("attrib +h " + FILE_NAME).c_str()); // Windows'ta dosyayı gizle
 #else
-    system(("chmod 600 " + FILE_NAME).c_str()); 
+    system(("chmod 600 " + FILE_NAME).c_str()); // Linux/macOS'ta erişimi kısıtla
 #endif
 }
 
+// 📌 Terminalde Şifre Girişi
 std::string getPasswordInput()
 {
 #ifdef _WIN32
@@ -151,7 +152,7 @@ int main()
         file.close();
     }
 
-    protectFile();   // Dosyayı gizle ve koru
+    protectFile();  // Dosyayı gizle ve koru
     loadPasswords(); // Şifreleri yükle
 
     if (!adminLogin())
